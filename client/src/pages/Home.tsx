@@ -7,7 +7,6 @@ import BookTable from "@/components/BookTable";
 import BookForm from "@/components/BookForm";
 import SearchBar from "@/components/SearchBar";
 import DeleteConfirmationDialog from "@/components/DeleteConfirmationDialog";
-import DeploymentGuide from "@/components/DeploymentGuide";
 import { BookFormData, BookWithId, SearchFilters } from "@/lib/types";
 
 export default function Home() {
@@ -176,8 +175,6 @@ export default function Home() {
           isSubmitting={createBookMutation.isPending || updateBookMutation.isPending}
           onCancel={handleCancelEdit}
         />
-        
-        <DeploymentGuide />
       </div>
 
       {/* Delete Confirmation Dialog */}

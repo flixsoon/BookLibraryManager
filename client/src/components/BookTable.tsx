@@ -47,8 +47,8 @@ export default function BookTable({ books, onEdit, onDelete, isLoading }: BookTa
     <Card className="mb-8">
       <CardHeader>
         <div className="flex justify-between items-center">
-          <CardTitle className="text-xl font-serif text-primary-800">Ma Collection de Livres</CardTitle>
-          <Badge variant="outline" className="bg-primary-100 text-primary-800">
+          <CardTitle className="text-xl font-serif text-accent">Ma Collection de Livres</CardTitle>
+          <Badge variant="outline" className="bg-accent/10 text-accent">
             {books.length} {books.length === 1 ? "Livre" : "Livres"}
           </Badge>
         </div>
@@ -58,12 +58,12 @@ export default function BookTable({ books, onEdit, onDelete, isLoading }: BookTa
           <div className="overflow-x-auto">
             <Table>
               <TableHeader>
-                <TableRow>
-                  <TableHead>Titre</TableHead>
-                  <TableHead>Auteur</TableHead>
-                  <TableHead>Année</TableHead>
-                  <TableHead>Genre</TableHead>
-                  <TableHead className="text-right">Actions</TableHead>
+                <TableRow className="bg-primary/5">
+                  <TableHead className="font-bold">Titre</TableHead>
+                  <TableHead className="font-bold">Auteur</TableHead>
+                  <TableHead className="font-bold">Année</TableHead>
+                  <TableHead className="font-bold">Genre</TableHead>
+                  <TableHead className="text-right font-bold">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>

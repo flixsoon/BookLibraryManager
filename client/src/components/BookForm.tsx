@@ -169,7 +169,7 @@ export default function BookForm({ onSubmit, bookToEdit, isSubmitting, onCancel 
             <div className="flex items-center justify-between">
               <Button 
                 type="submit" 
-                className="bg-primary-600 hover:bg-primary-700"
+                className="bg-accent hover:bg-accent/90 text-accent-foreground"
                 disabled={isSubmitting}
               >
                 <span className="material-icons mr-1">save</span>
