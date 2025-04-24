@@ -1,0 +1,21 @@
+meta {
+  name: Update Book
+  type: http
+  seq: 4
+}
+
+put {{baseUrl}}/api/books/1 {
+  headers {
+    Content-Type: application/json
+  }
+  body {
+    mode: json
+    json: {
+      "title": "L'Étranger (Édition révisée)",
+      "author": "Albert Camus",
+      "year": 1942,
+      "genre": "Roman",
+      "description": "L'histoire d'un homme qui commet un meurtre et affronte les conséquences de ses actes."
+    }
+  }
+}

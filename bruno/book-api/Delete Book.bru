@@ -1,0 +1,11 @@
+meta {
+  name: Delete Book
+  type: http
+  seq: 5
+}
+
+delete {{baseUrl}}/api/books/5 {
+  headers {
+    Content-Type: application/json
+  }
+}

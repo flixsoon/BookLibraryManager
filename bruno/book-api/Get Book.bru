@@ -1,0 +1,11 @@
+meta {
+  name: Get Book
+  type: http
+  seq: 2
+}
+
+get {{baseUrl}}/api/books/1 {
+  headers {
+    Content-Type: application/json
+  }
+}

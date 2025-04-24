@@ -1,0 +1,21 @@
+meta {
+  name: Create Book
+  type: http
+  seq: 3
+}
+
+post {{baseUrl}}/api/books {
+  headers {
+    Content-Type: application/json
+  }
+  body {
+    mode: json
+    json: {
+      "title": "Dune",
+      "author": "Frank Herbert",
+      "year": 1965,
+      "genre": "Science-Fiction",
+      "description": "Un roman de science-fiction qui se déroule dans un futur lointain de l'humanité"
+    }
+  }
+}
