@@ -18,33 +18,32 @@ export default function Home() {
   const [filteredBooks, setFilteredBooks] = useState<BookWithId[]>([]);
 
   // Fetch all books
-  const { data: books, isLoading } = useQuery({
+  const { data: books = [], isLoading } = useQuery<BookWithId[]>({
     queryKey: ["/api/books"],
     refetchOnWindowFocus: true,
   });
 
   // Apply filters to books
   useEffect(() => {
-    if (books) {
-      setAllBooks(books);
-      
-      if (filters.query === "" && (filters.genre === "" || filters.genre === "all")) {
-        setFilteredBooks(books);
-      } else {
-        const filtered = books.filter((book: BookWithId) => {
-          const matchesQuery = filters.query === "" || 
-            book.title.toLowerCase().includes(filters.query.toLowerCase()) ||
-            book.author.toLowerCase().includes(filters.query.toLowerCase());
-          
-          const matchesGenre = filters.genre === "" || 
-                               filters.genre === "all" || 
-                               book.genre === filters.genre;
-          
-          return matchesQuery && matchesGenre;
-        });
+    // books est déjà défini avec une valeur par défaut []
+    setAllBooks(books);
+    
+    if (filters.query === "" && (filters.genre === "" || filters.genre === "all")) {
+      setFilteredBooks(books);
+    } else {
+      const filtered = books.filter((book: BookWithId) => {
+        const matchesQuery = filters.query === "" || 
+          book.title.toLowerCase().includes(filters.query.toLowerCase()) ||
+          book.author.toLowerCase().includes(filters.query.toLowerCase());
         
-        setFilteredBooks(filtered);
-      }
+        const matchesGenre = filters.genre === "" || 
+                             filters.genre === "all" || 
+                             book.genre === filters.genre;
+        
+        return matchesQuery && matchesGenre;
+      });
+      
+      setFilteredBooks(filtered);
     }
   }, [books, filters]);
 

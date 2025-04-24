@@ -64,7 +64,7 @@ export default function BookForm({ onSubmit, bookToEdit, isSubmitting, onCancel 
   return (
     <Card className="mb-8">
       <CardHeader>
-        <CardTitle className="text-xl font-serif text-primary-800">
+        <CardTitle className="text-xl font-serif text-accent">
           {isEditMode ? "Modifier le livre" : "Ajouter un livre"}
         </CardTitle>
       </CardHeader>

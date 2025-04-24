@@ -71,8 +71,8 @@ export default function BookTable({ books, onEdit, onDelete, isLoading }: BookTa
                   <TableRow key={book.id} className="hover:bg-gray-50">
                     <TableCell>
                       <div className="flex items-center">
-                        <div className="w-10 h-14 bg-primary-100 rounded flex-shrink-0 mr-3 flex items-center justify-center">
-                          <span className="material-icons text-primary-700">auto_stories</span>
+                        <div className="w-10 h-14 bg-accent/10 rounded flex-shrink-0 mr-3 flex items-center justify-center">
+                          <span className="material-icons text-accent">auto_stories</span>
                         </div>
                         <span className="font-medium">{book.title}</span>
                       </div>
@@ -89,7 +89,7 @@ export default function BookTable({ books, onEdit, onDelete, isLoading }: BookTa
                         variant="ghost" 
                         size="icon" 
                         onClick={() => onEdit(book)}
-                        className="text-primary-600 hover:text-primary-800 h-8 w-8"
+                        className="text-primary hover:text-primary/70 h-8 w-8"
                       >
                         <span className="material-icons">edit</span>
                       </Button>
@@ -97,7 +97,7 @@ export default function BookTable({ books, onEdit, onDelete, isLoading }: BookTa
                         variant="ghost" 
                         size="icon" 
                         onClick={() => onDelete(book)}
-                        className="text-destructive hover:text-red-800 h-8 w-8"
+                        className="text-destructive hover:text-destructive/70 h-8 w-8"
                       >
                         <span className="material-icons">delete</span>
                       </Button>
