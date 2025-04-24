@@ -1,4 +1,6 @@
-import { users, type User, type InsertUser, type Book, type InsertBook } from "@shared/schema";
+import { users, books, type User, type InsertUser, type Book, type InsertBook } from "@shared/schema";
+import { db } from "./db";
+import { eq } from "drizzle-orm";
 
 export interface IStorage {
   getUser(id: number): Promise<User | undefined>;
@@ -11,90 +13,58 @@ export interface IStorage {
   deleteBook(id: number): Promise<void>;
 }
 
-export class MemStorage implements IStorage {
-  private users: Map<number, User>;
-  private books: Map<number, Book>;
-  private userCurrentId: number;
-  private bookCurrentId: number;
-
-  constructor() {
-    this.users = new Map();
-    this.books = new Map();
-    this.userCurrentId = 1;
-    this.bookCurrentId = 1;
-
-    // Add some initial books for demo
-    this.createBook({
-      title: "L'Étranger",
-      author: "Albert Camus",
-      year: 1942,
-      genre: "Roman",
-      description: "L'histoire d'un homme qui commet un meurtre et affronte les conséquences de ses actes."
-    });
-    this.createBook({
-      title: "1984",
-      author: "George Orwell",
-      year: 1949,
-      genre: "Science-Fiction",
-      description: "Un roman dystopique décrivant un futur totalitaire sous surveillance constante."
-    });
-    this.createBook({
-      title: "Le Petit Prince",
-      author: "Antoine de Saint-Exupéry",
-      year: 1943,
-      genre: "Conte",
-      description: "Un conte poétique qui aborde les thèmes de l'amitié, l'amour et le sens de la vie."
-    });
-    this.createBook({
-      title: "Les Misérables",
-      author: "Victor Hugo",
-      year: 1862,
-      genre: "Classique",
-      description: "Un roman historique qui suit la vie de plusieurs personnages dans la France du 19e siècle."
-    });
-  }
-
+// Classe de stockage utilisant la base de données
+export class DatabaseStorage implements IStorage {
   async getUser(id: number): Promise<User | undefined> {
-    return this.users.get(id);
+    const [user] = await db.select().from(users).where(eq(users.id, id));
+    return user || undefined;
   }
 
   async getUserByUsername(username: string): Promise<User | undefined> {
-    return Array.from(this.users.values()).find(
-      (user) => user.username === username,
-    );
+    const [user] = await db.select().from(users).where(eq(users.username, username));
+    return user || undefined;
   }
 
   async createUser(insertUser: InsertUser): Promise<User> {
-    const id = this.userCurrentId++;
-    const user: User = { ...insertUser, id };
-    this.users.set(id, user);
+    const [user] = await db
+      .insert(users)
+      .values(insertUser)
+      .returning();
     return user;
   }
 
   async getAllBooks(): Promise<Book[]> {
-    return Array.from(this.books.values());
+    return await db.select().from(books);
   }
 
   async getBook(id: number): Promise<Book | undefined> {
-    return this.books.get(id);
+    const [book] = await db.select().from(books).where(eq(books.id, id));
+    return book || undefined;
   }
 
   async createBook(insertBook: InsertBook): Promise<Book> {
-    const id = this.bookCurrentId++;
-    const book: Book = { ...insertBook, id };
-    this.books.set(id, book);
+    const [book] = await db
+      .insert(books)
+      .values(insertBook)
+      .returning();
     return book;
   }
 
   async updateBook(id: number, insertBook: InsertBook): Promise<Book> {
-    const book: Book = { ...insertBook, id };
-    this.books.set(id, book);
-    return book;
+    const [updatedBook] = await db
+      .update(books)
+      .set(insertBook)
+      .where(eq(books.id, id))
+      .returning();
+    return updatedBook;
   }
 
   async deleteBook(id: number): Promise<void> {
-    this.books.delete(id);
+    await db
+      .delete(books)
+      .where(eq(books.id, id));
   }
 }
 
-export const storage = new MemStorage();
+// Utiliser DatabaseStorage pour le stockage
+export const storage = new DatabaseStorage();
